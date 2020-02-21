@@ -1,0 +1,24 @@
+.header{
+  min-height: 100vh;
+   margin-bottom: 15px;
+display: flex;
+   flex-flow: row wrap;
+   background-color:red;
+    color:yellow;
+   justify-content: space-around;
+}
+
+.header img {
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  }
+
+.body{
+    max-width: 960px;
+    justify-content: space-evenly;
+}
+
+.wrapper .body{
+    margin: 0 auto;
+}
