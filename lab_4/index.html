@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Prof A's Demo Page</title>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <div class="header">Oluwatobi Ajide's Lab 4</div>
+        <button class="button" onclick="clickMe()">
+          Click me to make a change
+        </button>
+        <div class="content">
+          <p class= "first">
+            My name has 14 characters
+          </p>
+          <p class="second">
+            the third character in my name is U<br>
+            ide
+            <script>
+               let fName = 'Oluwatobi';
+               let lName = 'Ajide';
+               let len = fName.length;
+                document.querySelector(".header").innerHTML = fName + " " + lName + " "+ len + " Lab 4";
+            </script>
+          </p>
+        </div>
+        <div class="footer"></div>
+      </div>
+    </div>
+    <script>
+      function clickMe() {
+        const content = document.querySelector(".content");
+        content.innerHTML = "Hello world";
+      }
+    </script>
+  </body>
+</html>
