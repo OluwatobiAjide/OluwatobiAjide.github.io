@@ -50,16 +50,7 @@
       var markerMck = L.marker([38.984901, -76.945221])
         .addTo(mymap)
         .bindPopup("McKeldin Library");
-      function pop(arg) {
-        const mark = L.marker(arg[0].coordinates)
-          .addTo(mymap)
-          .bindPopup(arg[0].name);
-      }
-      fetch("https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json")
-        .then(data => {
-          console.log(data);
-          pop(data);
-        });
+   
     </script>
   </body>
 </html>
