@@ -21,13 +21,45 @@
       <div class="wrapper">
         <div class="header">Frontend Libraries: Maps Lab</div>
         <div class="content">
-          When your lab is done, this should be replaced with a stylish map.
+          <div id="mapid"></div>
         </div>
         <div class="footer">Make some markers work!</div>
       </div>
     </div>
     <script>
-        /* Your lab code can go here, or in an external file you include */
+      var mymap = L.map("mapid").setView([38.9897, -76.9378], 13);
+      L.tileLayer(
+        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+        {
+          attribution:
+            'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: "mapbox/streets-v11",
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken:
+            "pk.eyJ1IjoidGFqaWRlIiwiYSI6ImNrOGttcjd2ZTAwdWgzZnQ4NGp5d2NuMjYifQ.HBFDEfnbhoFHWiikRE4r0Q"
+        }
+      ).addTo(mymap);
+      var markerHorn = L.marker([38.98481, -76.952049])
+        .addTo(mymap)
+        .bindPopup("Hornbake Library");
+      var markerRec = L.marker([38.99296, -76.94305])
+        .addTo(mymap)
+        .bindPopup("Eppley Rec Centre");
+      var markerMck = L.marker([38.984901, -76.945221])
+        .addTo(mymap)
+        .bindPopup("McKeldin Library");
+      function pop(arg) {
+        const mark = L.marker(arg[0].coordinates)
+          .addTo(mymap)
+          .bindPopup(arg[0].name);
+      }
+      fetch("https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json")
+        .then(data => {
+          console.log(data);
+          pop(data);
+        });
     </script>
   </body>
 </html>
