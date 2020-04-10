@@ -10,18 +10,73 @@
       <div class="wrapper">
         <div class="header">Frontend Libraries: Charts Lab</div>
         <div class="content">
-          When your lab is done, this should be replaced with a useful chart full of food data.
+          <div id="chartContainer" style="height: 300px; width: 100%;"></div>
         </div>
         <div class="footer">Let's eat out in the future!</div>
       </div>
     </div>
     <script>
-      fetch('./countries.json') // replace this with the food safety data set
+      fetch("https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json") // replace this with the food safety data set
         .then((data) => data.json()) // this is an "implicit return" - we're returning the results of the Fetch request to the next step.
-        .then((data) => { // this is an explicit return. If I want my information to go further, I'll need to use the "return" keyword before the brackets close
+        .then((data) => {
+          // this is an explicit return. If I want my information to go further, I'll need to use the "return" keyword before the brackets close
           console.log(data);
-          // return data; // <- this will pass the data to the next "then" statement when I'm ready.
+          return data; // <- this will pass the data to the next "then" statement when I'm ready.
         })
+        .then((data) => {
+          const count = data.reduce((count, curr) => {
+            count[curr.category] = (count[curr.category] || 0) + 1;
+            return count;
+          }, {});
+          const arr = [];
+          for (var key in count) {
+            arr.push({ label: key, y: count[key] });
+          }
+          return arr;
+        })
+        .then((data) => {
+          console.log(data);
+          var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            theme: "light2",
+            title: {
+              text: "Let's Find Somewhere To Eat",
+            },
+            axisX: {
+              interval: 1,
+            },
+            axisY: {
+              maximum: 250,
+              scaleBreaks: {
+                type: "zigzag",
+
+            
+                customBreaks: [
+                  {
+                    startValue: 30,
+                    endValue: 40,
+                  },
+                  {
+                    startValue: 70,
+                    endValue: 120,
+                  },
+                  {
+                    startValue: 170,
+                    endValue: 210,
+                  },
+                ],
+              },
+            },
+
+            data: [
+              {
+                type: "column",
+                dataPoints: data,
+              },
+            ],
+          });
+          chart.render();
+        });
     </script>
   </body>
 </html>
