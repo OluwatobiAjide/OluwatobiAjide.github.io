@@ -1,26 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Replace Me With Your Lab Page</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+  </head>
 
-<head>
-  <title>Replace Me With Your Lab Page</title>
-  <link rel="stylesheet" type="text/css" href="./styles.css">
-</head>
-
-<body>
-  <div class="container">
-    <div class="wrapper">
-      <div class="header">Replace Me With Your Lab Page</div>
-      <div class="content"></div>
-      <div class="footer"></div>
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <div class="header">Replace Me With Your Lab Page</div>
+        <div class="content">
+          <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+        </div>
+        <div class="footer"></div>
+      </div>
     </div>
-  </div>
-  <script>
-    fetch('/api') // Rather than fetching from PG County, we're going to fetch from our own server.
-      .then(res => res.json())
-      .then(res => {
-        // Here's where your chart code should go.
-      })
-  </script>
-</body>
+    <script>
+      fetch("/api") // Rather than fetching from PG County, we're going to fetch from our own server.
+        .then((res) => 
+          res.json()
+        )
+        .then((res) => {
+          const chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            theme: "light1",
+            title: {
+              text: "Let's Find Somewhere To Eat",
+            },
+            axisX: {
+              interval: 1,
+              labelAngle: 45,
+              labelAutoFit: true,
+              labelWrap: true,
+            },
+            axisY: {
+              maximum: 250,
+              scaleBreaks: {
+                type: "zigzag",
 
+                customBreaks: [
+                  {
+                    startValue: 30,
+                    endValue: 40,
+                  },
+                  {
+                    startValue: 70,
+                    endValue: 120,
+                  },
+                  {
+                    startValue: 170,
+                    endValue: 210,
+                  },
+                ],
+              },
+            },
+
+            data: [
+              {
+                type: "column",
+                dataPoints: res,
+              },
+            ],
+          });
+          chart.render();
+        });
+    </script>
+  </body>
 </html>

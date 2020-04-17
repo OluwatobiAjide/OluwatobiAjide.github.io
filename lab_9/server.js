@@ -22,7 +22,7 @@ app.use(express.static('public'));
 
 
 function processDataForFrontEnd(req, res) {
-  const baseURL = ''; // Enter the URL for the data you would like to retrieve here
+  const baseURL = 'https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json'; // Enter the URL for the data you would like to retrieve here
 
   // Your Fetch API call starts here
   // Note that at no point do you "return" anything from this function -
@@ -30,8 +30,16 @@ function processDataForFrontEnd(req, res) {
     fetch(baseURL)
       .then((r) => r.json())
       .then((data) => {
-        console.log(data);
-        res.send({ data: data }); // here's where we return data to the front end
+        const count = data.reduce((count, curr) => {
+          count[curr.category] = (count[curr.category] || 0) + 1;
+          return count;
+        }, {});
+        const arr = [];
+        for (var key in count) {
+          arr.push({ label: key, y: count[key] });
+        }
+        console.log(arr);
+        res.send(arr); // here's where we return data to the front end
       })
       .catch((err) => {
         console.log(err);
