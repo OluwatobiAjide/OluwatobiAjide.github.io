@@ -46,31 +46,31 @@ function processDataForFrontEnd(req, res) {
 app
   .route("/api")
   .get((req, res) => {
+    console.log("/api get request");
     // processDataForFrontEnd(req, res)
     (async () => {
       const db = await open(dbSettings);
       const result = await db.all("SELECT * FROM user");
-      console.log("Expected result", result);
+      console.log("Get result", result);
       res.json(result);
-    })();
+    })
   })
-  .post((req, res) => {
-    console.log("/api post request", req.body);
+  .put((req, res) => {
+    console.log("/api put request", req.body);
     if (!req.body.name) {
       console.log(req.body);
       res.status("418").send("something went wrong, additionally i am a teapot");
     } else {
-      writeUser(req.body.name, dbSettings)
+      writeUser(req.body.name,req.body.zipCode,req.body.interests, dbSettings)
       .then((result) => {
         console.log(result);
-        res.send("your request was successful"); // simple mode
+        res.json("Interest Saved"); // simple mode
       })
       .catch((err) => {
         console.log(err);
       });
     }
   });
-
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`);
 });

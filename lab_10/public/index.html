@@ -14,12 +14,15 @@
           <form class="targetForm" id="labForm">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" />
+            <label for="zipCode">Zip Code</label>
+            <input type="text" id="zipCode" name="zipCode" />
             <label for="interests">Interests</label>
             <textarea id="interests" name="interests" rows="5" cols="33">
                 Default text says what?
             </textarea
             ><br />
             <button id="formBtn">Submit</button>
+            <button id="getBtn">Get Data</button>
           </form>
         </div>
       </div>
@@ -33,7 +36,7 @@
         const formToSend = new FormData(target);
 
         fetch("/api", {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
@@ -48,9 +51,30 @@
             target.append(`${txtresponse}`);
           });
       }
+      function getTable(e) {
+        e.preventDefault(); // this prevents your page reloading on button click
+        const target = document.querySelector("#labform");
+        const btn = document.querySelector("#getBtn");
+        fetch("/api",{
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((data) => data.json()) 
+          .then((res) => {
+            console.log(res);
+            btn.setAttribute("disabled", true);
+            const br = document.createElement("br");
+            target.append(br);
+            target.append(`${res}`);
+          });
+      }
 
       const formBtn = document.querySelector("#formBtn");
       formBtn.addEventListener("click", sendForm);
+      const getBtn =document.querySelector("#getBtn");
+      getBtn.addEventListener("click",getTable);
     </script>
   </body>
 </html>
