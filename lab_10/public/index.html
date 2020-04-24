@@ -24,6 +24,7 @@
             <button id="formBtn">Submit</button>
             <button id="getBtn">Get Data</button>
           </form>
+          <div id="data"></div>
         </div>
       </div>
     </div>
@@ -53,7 +54,7 @@
       }
       function getTable(e) {
         e.preventDefault(); // this prevents your page reloading on button click
-        const target = document.querySelector("#labform");
+        const target = document.querySelector("#data");
         const btn = document.querySelector("#getBtn");
         fetch("/api",{
           method: "GET",
