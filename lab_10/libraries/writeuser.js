@@ -12,7 +12,9 @@ async function writeUser(username, zipcode,interest , dbSettings) {
     return result;
   }
   
+  
 export default writeUser;
+
 
 //   import writeUser from "./libraries/writeuser";
 

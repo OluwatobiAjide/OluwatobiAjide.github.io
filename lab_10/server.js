@@ -3,13 +3,10 @@
 import express from "express";
 import fetch from "node-fetch";
 
-// const sqlite3 = require('sqlite3').verbose(); // We're including a server-side version of SQLite, the in-memory SQL server.
-// const open = require(sqlite).open; // We're including a server-side version of SQLite, the in-memory SQL server.
-
 import sqlite3 from "sqlite3";
 import { open } from "sqlite";
 import writeUser from "./libraries/writeuser";
-
+import getUsers from "./libraries/getUsers";
 const dbSettings = {
   filename: "./tmp/database.db",
   driver: sqlite3.Database,
@@ -48,12 +45,10 @@ app
   .get((req, res) => {
     console.log("/api get request");
     // processDataForFrontEnd(req, res)
-    (async () => {
-      const db = await open(dbSettings);
-      const result = await db.all("SELECT * FROM user");
-      console.log("Get result", result);
-      res.json(result);
+    getUsers(dbSettings).then((result) =>{
+      res.send(result);
     })
+   
   })
   .put((req, res) => {
     console.log("/api put request", req.body);
@@ -64,7 +59,7 @@ app
       writeUser(req.body.name,req.body.zipCode,req.body.interests, dbSettings)
       .then((result) => {
         console.log(result);
-        res.json("Interest Saved"); // simple mode
+        res.send("Yes Success"); // simple mode
       })
       .catch((err) => {
         console.log(err);

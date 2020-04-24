@@ -24,7 +24,8 @@
             <button id="formBtn">Submit</button>
             <button id="getBtn">Get Data</button>
           </form>
-          <div id="data"></div>
+          <div id="data">
+          </div>
         </div>
       </div>
     </div>
@@ -66,9 +67,14 @@
           .then((res) => {
             console.log(res);
             btn.setAttribute("disabled", true);
-            const br = document.createElement("br");
-            target.append(br);
-            target.append(`${res}`);
+            for (key in res){
+              const name = res[key].name;
+              const zip = res[key].zipcode;
+              const interest =  res[key].interest;
+              const br = document.createElement("br");
+              target.append(br);
+              target.append(`Name: ${name}, Zip Code: ${zip}, Interest: ${interest}`)
+            }
           });
       }
 
